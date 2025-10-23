@@ -12,14 +12,14 @@ network:
     enp0s8:
       addresses: [192.168.0.1/30]    # Hacia R1
 EOF
-sudo netplan apply
+netplan apply
 
 # 2. Habilitar IP forwarding
-echo 'net.ipv4.ip_forward = 1' | sudo tee -a /etc/sysctl.conf
-sudo sysctl -p
+echo 'net.ipv4.ip_forward = 1' >> /etc/sysctl.conf
+sysctl -p
 
 # 3. Configurar FRR
-sudo cat > /etc/frr/frr.conf << EOF
+cat > /etc/frr/frr.conf << EOF
 hostname R0
 !
 interface enp0s3
@@ -35,5 +35,5 @@ line vty
 EOF
 
 # 4. Reiniciar FRR
-sudo systemctl restart frr
+systemctl restart frr
 echo "R0 configurado correctamente"
