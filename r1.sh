@@ -1,6 +1,12 @@
 #!/bin/bash
 echo "=== CONFIGURANDO R0 ==="
+if ! command -v netplan &> /dev/null; then
+    echo "Instalando netplan..."
+    apt update && apt install -y netplan.io
+fi
 
+# 2. Crear directorio si no existe
+mkdir -p /etc/netplan
 # 1. Configurar IPs estáticas
 cat > /etc/netplan/01-netcfg.yaml << EOF
 network:
